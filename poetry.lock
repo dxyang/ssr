@@ -507,6 +507,9 @@ category = "main"
 optional = false
 python-versions = ">=3.6"
 
+[package.dependencies]
+numpy = ">=1.14.5"
+
 [[package]]
 name = "packaging"
 version = "20.9"
@@ -898,8 +901,8 @@ notebook = ">=4.4.1"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.8"
-content-hash = "4264b3d63c106dc48bce21999ba5763af282b0f5b2ee4e37aa68a9863fd973a4"
+python-versions = "3.8.*"
+content-hash = "e18ee7d11d003344acc108139a44407c9980c2d430dc20ba1ff47a409b0cb158"
 
 [metadata.files]
 appnope = [
