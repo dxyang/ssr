@@ -15,6 +15,3 @@ echo Exporting environment variables from .env
 set -o allexport
 [[ -f .env ]] && source .env
 set +o allexport
-
-# Activate a new shell with the environment activated
-poetry shell
