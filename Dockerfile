@@ -95,12 +95,18 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 # add poetry to path
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
+# cartography requirements
+RUN \
+   sudo apt-get install -y libproj-dev libgeos-dev
+
 # Install repo python requirements
-COPY lib /lib
 COPY pyproject.toml poetry.lock /
 WORKDIR /
 RUN poetry config virtualenvs.create false
 RUN poetry run pip install --upgrade pip
-RUN poetry install && rm -rf ~/.cache/pypoetry/cache  && rm -rf ~/.cache/pypoetry/artifacts
+RUN poetry install
+RUN poetry run pip install shapely cartopy --no-binary shapely --no-binary cartopy
+
+RUN rm -rf ~/.cache/pypoetry/cache  && rm -rf ~/.cache/pypoetry/artifacts
 
 WORKDIR /opt/project
