@@ -11,7 +11,7 @@
 # Pull base image.
 # CUDA base image: nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04
 # Default base image: ubuntu:18.04
-FROM nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 
 # Don't want to deal with interactive things
 ENV DEBIAN_FRONTEND=noninteractive
