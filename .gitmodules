@@ -1,0 +1,3 @@
+[submodule "forecast_rodeo"]
+	path = forecast_rodeo
+	url = https://github.com/dxyang/forecast_rodeo.git

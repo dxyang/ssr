@@ -24,4 +24,4 @@ export PATH = "$HOME/.poetry/bin:$PATH"
 To install the dependencies of this repo, simply run `poetry install` from the root of the repo. Run `poetry shell` to active the virtual environment.
 
 # Processed Data
-Can be found on Google Drive [here](https://drive.google.com/drive/folders/1bFJ64Q_NlbKc1J1um-tQFmT1xEBBYWhV?usp=sharing) or at `/data/vision/fisher/code/dxyang/ssr/forecast_rodeo/results/regression/shared`
+[Fork](https://github.com/dxyang/forecast_rodeo) of the original forecast rodeo repo, with code fixes to work with the Python3 environment in this repo. This was used to generate the original data matrices as used by the paper. The datafiles can be found on Google Drive [here](https://drive.google.com/drive/folders/1bFJ64Q_NlbKc1J1um-tQFmT1xEBBYWhV?usp=sharing) or at `/data/vision/fisher/code/dxyang/ssr/forecast_rodeo/results/regression/shared`.
