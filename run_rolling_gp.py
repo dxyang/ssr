@@ -256,11 +256,12 @@ for num, prediction_date in enumerate(prediction_dates):
 skills = np.array(skills)
 temps = posterior_mean_predict.numpy()
 
-np.save("results_temperature_34_skills.npy", skills)
-np.save("results_temperature_34_temps.npy", temps)
+print(skills)
+np.save("results_gp_temperature_34_skills.npy", skills)
+np.save("results_gp_temperature_34_temps.npy", temps)
 
 print(f"all skills: {skills}")
 print(f"avg skills: {np.mean(skills)}, std: {np.std(skills)}")
 
-with open('results_temperature_34.pickle', 'wb') as handle:
+with open('results_gp_temperature_34.pickle', 'wb') as handle:
     pickle.dump(results_dict, handle)
