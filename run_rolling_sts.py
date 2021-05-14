@@ -38,8 +38,8 @@ for num, prediction_date in enumerate(prediction_dates):
     it_start = time.time()
     print(f"[{num} / {len(prediction_dates)}] ----- {prediction_dates_strs[num]} -----")
 
-    # dates > 2000 should give us approximately 10 years of training data
-    useful_idxs = dates >= datetime(2000, 1, 1)
+    # ~10 years of training data
+    useful_idxs = dates >= datetime(prediction_date.year - 10, 1, 1)
     train_idxs = np.logical_and(dates <= prediction_date, useful_idxs)
     test_idxs = np.logical_and(dates > prediction_date, useful_idxs)
 
@@ -69,20 +69,23 @@ for num, prediction_date in enumerate(prediction_dates):
         print(f"Y is temperature directly!")
 
     normalize_features = True
-    X_normalized = np.copy(X_original)
+    X_all = np.copy(X_original[useful_idxs])
+    X_train = np.copy(X_original[train_idxs])
+    X_test = np.copy(X_original[test_idxs])
     if normalize_features:
-        for col_idx in range(X_original.shape[1]):
+        for col_idx in range(X_all.shape[1]):
             if index_to_columnstr[col_idx] == 'ones':
-                X_normalized[:, col_idx] = X_original[:, col_idx]
                 continue
-            vals = X_original[:, col_idx]
-            mean = np.mean(X_original[:, col_idx])
-            std = np.std(X_original[:, col_idx])
-            X_normalized[:, col_idx] = (vals - mean) / std
+            vals_all = X_all[:, col_idx]
+            vals_train = X_train[:, col_idx]
+            vals_test = X_test[:, col_idx]
+            mean = np.mean(X_train[:, col_idx])
+            std = np.std(X_train[:, col_idx])
+            X_all[:, col_idx] = (vals_all - mean) / std
+            X_train[:, col_idx] = (vals_train - mean) / std
+            X_test[:, col_idx] = (vals_test - mean) / std
 
-    X = X_normalized[:, :]
-    X_train = X_normalized[train_idxs, :]
-    X_test = X_normalized[test_idxs, :]
+    X = X_all
 
     '''
     Define the STS model
@@ -96,19 +99,19 @@ for num, prediction_date in enumerate(prediction_dates):
             name='annual'
         )
         features_effects = []
-        # features_effects.append(
-        #     tfp.sts.LinearRegression(
-        #         design_matrix=X,# - np.mean(X),
-        #         name=f"linear_regression"
-        #     )
-        # )
-        for feature_name, idx in columnstr_to_index.items():
-            features_effects.append(
-                tfp.sts.LinearRegression(
-                    design_matrix=np.expand_dims(X[:, idx], 1),# - np.mean(X),
-                    name=f"lr_{feature_name}_{idx}"
-                )
+        features_effects.append(
+            tfp.sts.LinearRegression(
+                design_matrix=X,# - np.mean(X),
+                name=f"linear_regression"
             )
+        )
+        # for feature_name, idx in columnstr_to_index.items():
+        #     features_effects.append(
+        #         tfp.sts.LinearRegression(
+        #             design_matrix=np.expand_dims(X[:, idx], 1),# - np.mean(X),
+        #             name=f"lr_{feature_name}_{idx}"
+        #         )
+        #     )
         sts_components = [
             annual,
         ] + features_effects
@@ -125,7 +128,7 @@ for num, prediction_date in enumerate(prediction_dates):
     '''
     variational_posteriors = tfp.sts.build_factored_surrogate_posterior(model=temperature_model)
 
-    num_variational_steps = 80
+    num_variational_steps = 60
     optimizer = tf.optimizers.Adam(learning_rate=.1)
 
     # Using fit_surrogate_posterior to build and optimize the variational loss function.
@@ -206,8 +209,6 @@ for num, prediction_date in enumerate(prediction_dates):
         "params_dict": params_dict
     }
     results_dict[prediction_date] = result
-
-    import pdb; pdb.set_trace()
 
 skills = np.array(skills)
 temps = temperature_forecast_mean
