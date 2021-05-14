@@ -123,7 +123,7 @@ def get_data(add_ones=False):
     data_grouped_by_latlon = data_valid_targets.loc[:,relevant_cols].groupby(group_by_cols)
 
     latlons = [latlon for latlon, _ in data_grouped_by_latlon]
-    lat_oi, lon_oi = latlons[0] #27.0 261.0
+    lat_oi, lon_oi = 42.0, 251.0 #latlons[0] #27.0 261.0
 
     data_at_lat_lon = data_grouped_by_latlon.get_group((lat_oi, lon_oi))
     print(f"lat_oi: {lat_oi}, lon_oi: {lon_oi}")
