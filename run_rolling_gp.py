@@ -198,8 +198,8 @@ for num, prediction_date in enumerate(prediction_dates):
     extra_dates = np.array([prediction_date + i * one_day for i in np.arange(1, 29)])
     extra_dates_as_floats = np.array([dt_to_float(d) for d in extra_dates]).reshape(-1, 1)
 
-    prediction_dates = dates_as_float_train.reshape(-1, 1)
-    prediction_dates_extra = np.concatenate((prediction_dates, extra_dates_as_floats))
+    prediction_dates_for_gp = dates_as_float_train.reshape(-1, 1)
+    prediction_dates_extra = np.concatenate((prediction_dates_for_gp, extra_dates_as_floats))
 
     # Posterior GP using fitted kernel and observed data
     gp_posterior_predict = tfd.GaussianProcessRegressionModel(
