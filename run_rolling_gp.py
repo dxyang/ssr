@@ -173,7 +173,7 @@ for num, prediction_date in enumerate(prediction_dates):
     # Training loop
     batch_nlls = []  # Batch NLL for plotting
     full_ll = []  # Full data NLL for plotting
-    nb_iterations = 1001
+    nb_iterations = 5001
     for i, (index_points_batch, observations_batch) in tqdm(enumerate(islice(batched_dataset, nb_iterations)), file=sys.stdout):
         # Run optimization for single batch
         with tf.GradientTape() as tape:
@@ -227,7 +227,7 @@ for num, prediction_date in enumerate(prediction_dates):
 
     end = time.time()
 
-    print(f"time elapsed: {end - start} seconds")
+    print(f"time elapsed: {end - start} seconds, skill: {skill}")
 
     '''
     Bookkeeping
