@@ -49,11 +49,17 @@ for num, prediction_date in enumerate(prediction_dates):
     dates_train = dates[train_idxs]
     dates_as_float_train = dates_as_float[train_idxs]
 
-    anoms_test = anoms[test_idxs]
-    clims_test = clims[test_idxs]
-    temps_test = temps[test_idxs]
-    dates_test = dates[test_idxs]
-    dates_as_float_test = dates_as_float[test_idxs]
+    anoms_test = anoms[test_idxs][:28]
+    clims_test = clims[test_idxs][:28]
+    temps_test = temps[test_idxs][:28]
+    dates_test = dates[test_idxs][:28]
+    dates_as_float_test = dates_as_float[test_idxs][:28]
+
+    anoms = np.concatenate((anoms_train, anoms_test), axis=0)
+    clims = np.concatenate((clims_train, clims_test), axis=0)
+    temps = np.concatenate((temps_train, temps_test), axis=0)
+    dates = np.concatenate((dates_train, dates_test), axis=0)
+    dates_as_float = np.concatenate((dates_as_float_train, dates_as_float_test), axis=0)
 
     print(f"Num in training set: {len(anoms_train)}")
     print(f"Num in testing set: {len(anoms_test)}")
@@ -69,23 +75,19 @@ for num, prediction_date in enumerate(prediction_dates):
         print(f"Y is temperature directly!")
 
     normalize_features = True
-    X_all = np.copy(X_original[useful_idxs])
     X_train = np.copy(X_original[train_idxs])
-    X_test = np.copy(X_original[test_idxs])
+    X_test = np.copy(X_original[test_idxs][:28])
     if normalize_features:
-        for col_idx in range(X_all.shape[1]):
+        for col_idx in range(X_train.shape[1]):
             if index_to_columnstr[col_idx] == 'ones':
                 continue
-            vals_all = X_all[:, col_idx]
             vals_train = X_train[:, col_idx]
             vals_test = X_test[:, col_idx]
             mean = np.mean(X_train[:, col_idx])
             std = np.std(X_train[:, col_idx])
-            X_all[:, col_idx] = (vals_all - mean) / std
             X_train[:, col_idx] = (vals_train - mean) / std
             X_test[:, col_idx] = (vals_test - mean) / std
-
-    X = X_all
+    X = np.concatenate((X_train, X_test), axis=0)
 
     '''
     Define the STS model
