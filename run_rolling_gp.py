@@ -217,7 +217,7 @@ for num, prediction_date in enumerate(prediction_dates):
     '''
     Calculate the skill
     '''
-    anoms_hat = posterior_mean_predict.numpy()[14:] - clims[14:num_forecast_days]
+    anoms_hat = posterior_mean_predict.numpy()[14:] - clims_test[14:num_forecast_days]
     anoms_gt = anoms_test[14:num_forecast_days]
 
     def calculate_skill(a_hat, a):
@@ -253,24 +253,14 @@ for num, prediction_date in enumerate(prediction_dates):
     }
     results_dict[prediction_date] = result
 
-results_np = np.zeros((2, len(skills)))
 skills = np.array(skills)
 temps = posterior_mean_predict.numpy()
 
-results_np[0] = skills
-results_np[1] = temps
-
-np.save("results_temperature_34_skills.npy", results_np)
+np.save("results_temperature_34_skills.npy", skills)
+np.save("results_temperature_34_temps.npy", temps)
 
 print(f"all skills: {skills}")
 print(f"avg skills: {np.mean(skills)}, std: {np.std(skills)}")
 
-
 with open('results_temperature_34.pickle', 'wb') as handle:
     pickle.dump(results_dict, handle)
-
-with open('results_temperature_34.pickle', 'rb') as handle:
-    b = pickle.load(handle)
-
-import pdb; pdb.set_trace()
-print(results_dict == b)
