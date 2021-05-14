@@ -27,7 +27,7 @@ X_original, anoms, clims, temps, dates, \
 columnstr_to_index, index_to_columnstr = get_data(add_ones=False)
 dates_as_float = np.array([dt_to_float(d) for d in dates]).astype(np.float64)
 
-prediction_dates, prediction_dates_strs = get_prediction_dates(subsample_rate=10)
+prediction_dates, prediction_dates_strs = get_prediction_dates(subsample_rate=2)
 
 '''
 Do 3-4 week temperature predictions
@@ -257,11 +257,11 @@ skills = np.array(skills)
 temps = posterior_mean_predict.numpy()
 
 print(skills)
-np.save("results_gp_temperature_34_skills.npy", skills)
-np.save("results_gp_temperature_34_temps.npy", temps)
+np.save("results_gp_temperature_34_skills_2017.npy", skills)
+np.save("results_gp_temperature_34_temps_2017.npy", temps)
 
 print(f"all skills: {skills}")
 print(f"avg skills: {np.mean(skills)}, std: {np.std(skills)}")
 
-with open('results_gp_temperature_34.pickle', 'wb') as handle:
+with open('results_gp_temperature_34_2017.pickle', 'wb') as handle:
     pickle.dump(results_dict, handle)

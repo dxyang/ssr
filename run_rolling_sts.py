@@ -27,7 +27,7 @@ X_original, anoms, clims, temps, dates, \
 columnstr_to_index, index_to_columnstr = get_data(add_ones=False)
 dates_as_float = np.array([dt_to_float(d) for d in dates]).astype(np.float64)
 
-prediction_dates, prediction_dates_strs = get_prediction_dates(subsample_rate=10)
+prediction_dates, prediction_dates_strs = get_prediction_dates(subsample_rate=2)
 
 '''
 Do 3-4 week temperature predictions
@@ -43,6 +43,11 @@ for num, prediction_date in enumerate(prediction_dates):
     train_idxs = np.logical_and(dates <= prediction_date, useful_idxs)
     test_idxs = np.logical_and(dates > prediction_date, useful_idxs)
 
+    print(useful_idxs)
+    print(train_idxs)
+    print(test_idxs)
+    import pdb; pdb.set_trace()
+
     anoms_train = anoms[train_idxs]
     clims_train = clims[train_idxs]
     temps_train = temps[train_idxs]
@@ -54,12 +59,6 @@ for num, prediction_date in enumerate(prediction_dates):
     temps_test = temps[test_idxs][:28]
     dates_test = dates[test_idxs][:28]
     dates_as_float_test = dates_as_float[test_idxs][:28]
-
-    anoms = np.concatenate((anoms_train, anoms_test), axis=0)
-    clims = np.concatenate((clims_train, clims_test), axis=0)
-    temps = np.concatenate((temps_train, temps_test), axis=0)
-    dates = np.concatenate((dates_train, dates_test), axis=0)
-    dates_as_float = np.concatenate((dates_as_float_train, dates_as_float_test), axis=0)
 
     print(f"Num in training set: {len(anoms_train)}")
     print(f"Num in testing set: {len(anoms_test)}")
@@ -215,13 +214,13 @@ for num, prediction_date in enumerate(prediction_dates):
 skills = np.array(skills)
 temps = temperature_forecast_mean
 
-np.save("results_sts_temperature_34_skills.npy", skills)
-np.save("results_sts_temperature_34_temps.npy", temps)
+np.save("results_sts_temperature_34_skills_2017.npy", skills)
+np.save("results_sts_temperature_34_temps_2017.npy", temps)
 
 print(f"all skills: {skills}")
 print(f"avg skills: {np.mean(skills)}, std: {np.std(skills)}")
 
-with open('results_sts_temperature_34.pickle', 'wb') as handle:
+with open('results_sts_temperature_34_2017.pickle', 'wb') as handle:
     pickle.dump(results_dict, handle)
 
 import pdb; pdb.set_trace()
