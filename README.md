@@ -1,3 +1,12 @@
+# Bayesian Methods for Subseasonal Temperature Forecasting
+6.435 Final Project in Spring 2021 by Anubhav Guha and Daniel Yang
+
+We focus on the use of Bayesian models and methods for subseasonal temperature forecasting in the western United States. Subseasonal forecasts, which refer to predictions 2-6 weeks ahead, of weather, temperature and other climate-related quantities are of importance to a variety of stakeholders - from private companies in the agricultural sector to governing bodies hoping to more effectively plan the allocation of water resources. In comparison to short and medium term forecasts (1-14 days) and long term forecasts (> 6 weeks), there exists a relative paucity of effective methods for subseasonal forecasting. 
+
+# Related Work
+* Hwang, J., Orenstein, P., Cohen, J., Pfeiffer, K., & Mackey, L. (2019, July). Improving subseasonal forecasting in the western US with machine learning. In Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (pp. 2325-2335). [arxiv](https://arxiv.org/abs/1809.07394)
+
+# Repo Setup
 # PyEnv + Poetry
 PyEnv is a great way to manage local python installations separate from system installations. Poetry will be our dependency manager that creates an environment using a base pyenv python installation.
 
