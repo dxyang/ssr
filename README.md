@@ -7,7 +7,7 @@ We focus on the use of Bayesian models and methods for subseasonal temperature f
 * Hwang, J., Orenstein, P., Cohen, J., Pfeiffer, K., & Mackey, L. (2019, July). Improving subseasonal forecasting in the western US with machine learning. In Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (pp. 2325-2335). [arxiv](https://arxiv.org/abs/1809.07394)
 
 # Repo Setup
-# PyEnv + Poetry
+## PyEnv + Poetry
 PyEnv is a great way to manage local python installations separate from system installations. Poetry will be our dependency manager that creates an environment using a base pyenv python installation.
 
 ```
@@ -32,7 +32,7 @@ export PATH = "$HOME/.poetry/bin:$PATH"
 
 To install the dependencies of this repo, simply run `poetry install` from the root of the repo. Run `poetry shell` to active the virtual environment.
 
-# Processed Data
+## Processed Data
 [Fork](https://github.com/dxyang/forecast_rodeo) of the original forecast rodeo repo, with code fixes to work with the Python3 environment in this repo. This was used to generate the original data matrices as used by the paper. The datafiles can be found on Google Drive [here](https://drive.google.com/drive/folders/1bFJ64Q_NlbKc1J1um-tQFmT1xEBBYWhV?usp=sharing) or at `/data/vision/fisher/code/dxyang/ssr/forecast_rodeo/results/regression/shared`.
 
 You can checkout the fork by running
